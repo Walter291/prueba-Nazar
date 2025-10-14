@@ -51,18 +51,6 @@ Verificar que esté correctamente configurado con:
 dotnet --version
 ```
 
----
-
-## Puertos utilizados
-
-| Servicio     | Puerto                       |
-|---------------|------------------------------|
-| Backend       | 5000 (HTTP) / 5001 (HTTPS)  |
-| Frontend      | 80 (mapeado a 3000 local)   |
-| SQL Server    | 1433                         |
-
----
-
 ## Cómo levantar la aplicación
 
 ### 1. Clonar el repositorio
@@ -80,8 +68,8 @@ docker-compose up --build
 
 ### 3. Acceder a las aplicaciones
 
-- Frontend: http://localhost:3000
-- Backend API: http://localhost:5000/api/tareas
+- Frontend: http://localhost:7135
+- Backend API: http://localhost:7135
 
 ---
 
@@ -122,22 +110,6 @@ Luego, escanea el código QR con la app Expo Go desde tu celular.
 
 ---
 
-## Estructura del proyecto
-
-```
-proyecto-gestion-tareas/
-│
-├── backend/             # Proyecto .NET Web API
-├── frontend/            # Aplicación React
-├── mobile/              # Aplicación móvil React Native
-├── sql/                 # Scripts SQL de la base de datos
-├── docker-compose.yml   # Definición de servicios Docker
-├── Dockerfile           # Dockerfile del backend o frontend
-└── README.md            # Documentación del proyecto
-```
-
----
-
 ## Archivos importantes
 
 - docker-compose.yml → definición de servicios
@@ -146,19 +118,3 @@ proyecto-gestion-tareas/
 - mobile/ → app React Native
 - sql/ → scripts para inicializar la base de datos
 
----
-
-## Criterios de evaluación
-
-- Uso correcto de Redux-Saga
-- Buenas prácticas en el desarrollo con .NET 8
-- Estructura clara y modular en React
-- Conexión funcional entre backend y SQL Server
-- Integración correcta entre la app móvil y el backend
-- Documentación clara y completa
-
----
-
-## Licencia
-
-Este proyecto está bajo la licencia MIT. Puedes usarlo, modificarlo y distribuirlo libremente con fines educativos o personales.
