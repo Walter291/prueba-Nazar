@@ -1,0 +1,40 @@
+# === .NET ===
+bin/
+obj/
+out/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.vscode/
+
+# === Logs ===
+*.log
+Logs/
+*.tlog
+
+# === Configuración del sistema ===
+*.db
+*.sqlite
+*.DS_Store
+Thumbs.db
+
+# === Archivos de entorno ===
+.env
+.env.*
+
+# === Visual Studio ===
+.vs/
+*.psess
+*.vsp
+*.vspscc
+
+# === React / Node ===
+node_modules/
+dist/
+build/
+coverage/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
