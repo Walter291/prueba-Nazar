@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, Text, TouchableOpacity, View } from 'react-native';
-import { completarTarea, getTareas } from '../api/tareasApi';
+import { Alert, FlatList, Text, TouchableOpacity, View } from 'react-native';
+import { completarTarea, getTareas, getTareasFiltradas } from '../api/tareasApi';
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
   const [tareas, setTareas] = useState([]);
   const [cargando, setCargando] = useState(true);
+  const [filtro, setFiltro] = useState(null);
 
   const cargarTareas = async () => {
     try {
-      const data = await getTareas();
+      setCargando(true);
+      const data = filtro === null ? await getTareas() : await getTareasFiltradas(filtro);
       setTareas(data);
     } catch (error) {
       console.error('Error al obtener tareas:', error);
@@ -19,17 +21,34 @@ export default function HomeScreen() {
 
   const marcarComoCompletada = async (id) => {
     const ok = await completarTarea(id);
-    if (ok) {
-      alert('Tarea marcada como completada');
-      cargarTareas();
-    } else {
-      alert('No se pudo marcar como completada');
-    }
+    Alert.alert(ok ? 'Éxito' : 'Error', ok ? 'Tarea marcada como completada' : 'No se pudo marcar como completada');
+    cargarTareas();
   };
 
   useEffect(() => {
     cargarTareas();
-  }, []);
+  }, [filtro]);
+
+  const getBotonStyle = (valorFiltro) => ({
+    flex: 1,
+    marginHorizontal: 5,
+    paddingVertical: 10,
+    borderRadius: 8,
+    backgroundColor:
+      filtro === valorFiltro
+        ? valorFiltro === null
+          ? '#4dabf7'
+          : valorFiltro
+          ? '#69db7c'
+          : '#f5a623'
+        : '#ddd',
+  });
+
+  const getBotonTextStyle = (valorFiltro) => ({
+    color: filtro === valorFiltro ? '#fff' : '#333',
+    textAlign: 'center',
+    fontWeight: '600',
+  });
 
   if (cargando) {
     return (
@@ -41,6 +60,33 @@ export default function HomeScreen() {
 
   return (
     <View style={{ flex: 1, padding: 15, backgroundColor: '#f5f5f5' }}>
+      {/* Botones */}
+      <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginBottom: 15 }}>
+        <TouchableOpacity
+          style={{
+            flex: 1,
+            marginHorizontal: 5,
+            paddingVertical: 10,
+            borderRadius: 8,
+            backgroundColor: '#4b7bec',
+          }}
+          onPress={() => navigation.navigate('NuevaTarea')}
+        >
+          <Text style={{ color: '#fff', textAlign: 'center', fontWeight: '600' }}>Nueva Tarea</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={getBotonStyle(null)} onPress={() => setFiltro(null)}>
+          <Text style={getBotonTextStyle(null)}>Todas</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={getBotonStyle(true)} onPress={() => setFiltro(true)}>
+          <Text style={getBotonTextStyle(true)}>Completadas</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={getBotonStyle(false)} onPress={() => setFiltro(false)}>
+          <Text style={getBotonTextStyle(false)}>Pendientes</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Lista de tareas */}
       <FlatList
         data={tareas}
         keyExtractor={(item) => item.id.toString()}
@@ -52,7 +98,7 @@ export default function HomeScreen() {
               padding: 15,
               marginVertical: 6,
               shadowColor: '#000',
-              shadowOpacity: 0.1,
+              shadowOpacity: 0.05,
               shadowOffset: { width: 0, height: 1 },
             }}
           >
@@ -77,9 +123,7 @@ export default function HomeScreen() {
           </View>
         )}
         ListEmptyComponent={
-          <Text style={{ textAlign: 'center', color: '#777', marginTop: 30 }}>
-            No hay tareas para mostrar
-          </Text>
+          <Text style={{ textAlign: 'center', color: '#777', marginTop: 30 }}>No hay tareas para mostrar</Text>
         }
       />
     </View>

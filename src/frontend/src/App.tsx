@@ -1,21 +1,21 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom"
-import { Lista } from "./components/Lista"
-import { NuevoTarea } from "./components/NuevaTareaScreen"
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Lista } from "./components/Lista";
+import { NuevoTarea } from "./components/NuevoTarea";
 
 function App() {
-
   return (
-     <BrowserRouter>
-          <Routes>
-             <Routes>
-          <Route path="/" element={<Lista />} />
-            <Route path="/NuevoTarea" element={<NuevoTarea />} />
-            </Routes>
-          </Routes>
-     </BrowserRouter>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Lista />} />
+        <Route path="/nuevotarea" element={<NuevoTarea />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
+
+
+
 
 

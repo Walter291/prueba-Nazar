@@ -1,3 +1,3 @@
 // constants/config.js
-export const API_URL = 'https://192.168.100.56:7283/api/';
+export const API_URL = 'https://localhost:7135/api/';
 
