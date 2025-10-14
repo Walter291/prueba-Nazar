@@ -1,12 +1,8 @@
 import axios from "axios";
 import { API_URL } from "../constants/config";
 
-// ⚠️ Solo para desarrollo local
 const instance = axios.create({
-  baseURL: API_URL,
-  httpsAgent: new (require("https").Agent)({
-    rejectUnauthorized: false, // Ignora el certificado no confiable
-  }),
+  baseURL: API_URL, 
 });
 
 export const getTareas = async () => {
