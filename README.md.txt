@@ -1,87 +1,165 @@
-- Descripción
+# Proyecto de Gestión de Tareas
 
-Proyecto de gestión de tareas que permite:
+## Descripción
 
-Crear tareas
+Este es un proyecto full stack para la gestión de tareas que permite:
 
-Listarlas
+- Crear tareas
+- Listarlas
+- Marcar como completadas
+- Filtrar por estado
 
-Marcar como completadas
+---
 
-Filtrar por estado
+## Tecnologías utilizadas
 
-Incluye:
+- Backend: .NET 8 Web API
+- Frontend: React + Redux-Saga
+- Base de datos: SQL Server
+- Aplicación móvil: React Native (Expo)
+- Contenedores: Docker y Docker Compose
 
-Backend en .NET 8 Web API
+---
 
-Frontend en React + Redux-Saga
+## Requisitos previos
 
-Base de datos SQL Server
+Asegúrate de tener instalado lo siguiente:
 
-App móvil en React Native
+- Docker y Docker Compose
+- Node.js >= 20
+- .NET 8 SDK
+- SQL Server
+- Expo CLI (para ejecutar la app móvil)
 
-Contenedores Docker y Docker Compose
+---
 
-- Requisitos
+## Configuración del SDK (.NET)
 
-Docker & Docker Compose
+Es necesario tener instalado el SDK de .NET 8 y configurado como variable de entorno.
 
-Node.js >= 20
+### En Windows
 
-.NET 8 SDK
+Agregar la siguiente ruta al PATH del sistema:
 
-SQL Server
+```
+C:\Program Files\dotnet\
+```
 
-Expo CLI (para la app móvil)
+Verificar que esté correctamente configurado con:
 
+```bash
+dotnet --version
+```
 
-- Puertos usados
+---
 
-Backend: 5000 (HTTP) / 5001 (HTTPS)
+## Puertos utilizados
 
-Frontend: 80 (mapear a 3000 local)
+| Servicio     | Puerto                       |
+|---------------|------------------------------|
+| Backend       | 5000 (HTTP) / 5001 (HTTPS)  |
+| Frontend      | 80 (mapeado a 3000 local)   |
+| SQL Server    | 1433                         |
 
-SQL Server: 1433
+---
 
-- Cómo levantar la app
+## Cómo levantar la aplicación
 
-Levantar todos los servicios con Docker Compose
+### 1. Clonar el repositorio
 
-Acceder al frontend en el navegador
+```bash
+git clone https://github.com/tu-usuario/proyecto-gestion-tareas.git
+cd proyecto-gestion-tareas
+```
 
-Acceder al backend vía API
+### 2. Levantar todos los servicios con Docker Compose
 
-Ejecutar la app móvil con Expo Go y escanear el QR
+```bash
+docker-compose up --build
+```
 
-- Explicación de cada parte
+### 3. Acceder a las aplicaciones
 
-Backend: endpoints para listar y crear tareas, validaciones, integración con SQL Server.
+- Frontend: http://localhost:3000
+- Backend API: http://localhost:5000/api/tareas
 
-Frontend: dashboard con lista de tareas, formulario de creación y opción de marcar tareas completadas, manejo de estados con Redux-Saga.
+---
 
-App móvil: consumo de la API, pantallas de lista y creación de tareas, interacción con el backend.
+## Ejecutar la app móvil con Expo
 
-- Archivos importantes
+```bash
+npm install -g expo-cli
+cd mobile
+npm install
+expo start
+```
 
-Scripts SQL para la base de datos
+Luego, escanea el código QR con la app Expo Go desde tu celular.
 
-Proyectos backend, frontend y móvil
+---
 
-Dockerfiles para backend y frontend
+## Explicación de la arquitectura
 
-docker-compose.yml
+### Backend (.NET 8 Web API)
 
+- Endpoints REST para listar, crear y actualizar tareas
+- Validaciones de entrada
+- Integración con SQL Server mediante Entity Framework Core
 
-- Criterios de Evaluación
+### Frontend (React + Redux-Saga)
 
-Uso correcto de Redux-Saga
+- Dashboard de tareas
+- Formulario para crear nuevas tareas
+- Filtros por estado
+- Estado global manejado con Redux
+- Lógica asíncrona con Redux-Saga
 
-Buenas prácticas en .NET Core
+### App móvil (React Native + Expo)
 
-Estructura clara y organizada en React
+- Pantallas para ver y crear tareas
+- Consumo de la misma API del backend
+- Sincronización en tiempo real con el backend
 
-Conexión correcta a SQL Server desde el backend
+---
 
-Integración de la app móvil con el backend
+## Estructura del proyecto
 
-Documentación clara y completa
+```
+proyecto-gestion-tareas/
+│
+├── backend/             # Proyecto .NET Web API
+├── frontend/            # Aplicación React
+├── mobile/              # Aplicación móvil React Native
+├── sql/                 # Scripts SQL de la base de datos
+├── docker-compose.yml   # Definición de servicios Docker
+├── Dockerfile           # Dockerfile del backend o frontend
+└── README.md            # Documentación del proyecto
+```
+
+---
+
+## Archivos importantes
+
+- docker-compose.yml → definición de servicios
+- backend/ → código fuente del API en .NET
+- frontend/ → aplicación React
+- mobile/ → app React Native
+- sql/ → scripts para inicializar la base de datos
+
+---
+
+## Criterios de evaluación
+
+- Uso correcto de Redux-Saga
+- Buenas prácticas en el desarrollo con .NET 8
+- Estructura clara y modular en React
+- Conexión funcional entre backend y SQL Server
+- Integración correcta entre la app móvil y el backend
+- Documentación clara y completa
+
+---
+
+## Licencia
+
+Este proyecto está bajo la licencia MIT. Puedes usarlo, modificarlo y distribuirlo libremente con fines educativos o personales.
+
