@@ -2,12 +2,12 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
 
-# Copiar el archivo .csproj desde la subcarpeta del proyecto
-COPY "Nazar Prueba/*.csproj" ./
+# Copiar el archivo .csproj
+COPY "Nazar Prueba.csproj" ./
 RUN dotnet restore
 
 # Copiar el resto del código fuente
-COPY "Nazar Prueba/" ./
+COPY . ./
 RUN dotnet publish -c Release -o out
 
 # Runtime (ejecutar la app)
