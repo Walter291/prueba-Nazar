@@ -19,7 +19,7 @@ jobs:
         run: |
           docker build \
             -t mi-imagen:latest \
-            -f "src/backend/Nazar Prueba/dockerfile" \
+            -f "src/backend/NazarPrueba/dockerfile" \
             "src/backend"
 
       - name: List Docker images
