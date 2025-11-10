@@ -1,9 +1,13 @@
 # Build (compilar la app)
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
-COPY *.csproj ./
+
+# Copiar el archivo .csproj desde la subcarpeta del proyecto
+COPY "Nazar Prueba/*.csproj" ./
 RUN dotnet restore
-COPY . ./
+
+# Copiar el resto del código fuente
+COPY "Nazar Prueba/" ./
 RUN dotnet publish -c Release -o out
 
 # Runtime (ejecutar la app)
