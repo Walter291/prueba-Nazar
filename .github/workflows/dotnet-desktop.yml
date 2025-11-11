@@ -1,44 +1,38 @@
-name: Build and Publish .NET Project
+name: Build and Publish .NET App
 
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Obtener el código del repositorio
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2️⃣ Configurar .NET 8
-      - name: Setup .NET
+      - name: Setup .NET SDK
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: 8.0.x
+          dotnet-version: '8.0.x'
 
-      # 3️⃣ Restaurar dependencias
       - name: Restore dependencies
-        run: dotnet restore "src/backend/NazarPrueba/Nazar Prueba.csproj"
+        run: dotnet restore "src/backend/NazarPrueba/NazarPrueba.csproj"
 
-      # 4️⃣ Compilar proyecto
-      - name: Build project
-        run: dotnet build "src/backend/NazarPrueba/Nazar Prueba.csproj" -c Release --no-restore
+      - name: Build
+        run: dotnet build "src/backend/NazarPrueba/NazarPrueba.csproj" --configuration Release --no-restore
 
-      # 5️⃣ Publicar proyecto
-      - name: Publish project
-        run: dotnet publish "src/backend/NazarPrueba/Nazar Prueba.csproj" -c Release -o publish --no-build
+      - name: Publish
+        run: dotnet publish "src/backend/NazarPrueba/NazarPrueba.csproj" --configuration Release --output src/backend/NazarPrueba/publish --no-build
 
-      # 6️⃣ Guardar los artefactos para deploy o descarga
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v3
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
         with:
-          name: published-app
+          name: NazarPrueba-publish
           path: src/backend/NazarPrueba/publish
+
 
 
 
