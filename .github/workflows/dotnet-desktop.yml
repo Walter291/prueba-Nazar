@@ -1,7 +1,9 @@
-name: Build Docker image
+name: Build and Publish .NET Project
 
 on:
   push:
+    branches: [ main ]
+  pull_request:
     branches: [ main ]
 
 jobs:
@@ -9,18 +11,35 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1️⃣ Obtener el código del repositorio
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+      # 2️⃣ Configurar .NET 8
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 8.0.x
 
-      - name: Build Docker image
-        run: |
-          docker build \
-            -t mi-imagen:latest \
-            -f "src/backend/NazarPrueba/dockerfile" \
-            "src/backend"
+      # 3️⃣ Restaurar dependencias
+      - name: Restore dependencies
+        run: dotnet restore "src/backend/NazarPrueba/Nazar Prueba.csproj"
 
-      - name: List Docker images
-        run: docker images
+      # 4️⃣ Compilar proyecto
+      - name: Build project
+        run: dotnet build "src/backend/NazarPrueba/Nazar Prueba.csproj" -c Release --no-restore
+
+      # 5️⃣ Publicar proyecto
+      - name: Publish project
+        run: dotnet publish "src/backend/NazarPrueba/Nazar Prueba.csproj" -c Release -o publish --no-build
+
+      # 6️⃣ Guardar los artefactos para deploy o descarga
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: published-app
+          path: src/backend/NazarPrueba/publish
+
+
+
+
